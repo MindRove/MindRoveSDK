@@ -1,0 +1,26 @@
+.vs/*
+*.pdb
+*.cache
+*.pyc
+*.db
+Release/*
+Debug/*
+obj/*
+__pycache__/*
+
+# Unity gitignore
+
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+.gradle/
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+*.unitypackage
+*.meta
+.vs/
