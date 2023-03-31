@@ -1,2 +1,2 @@
-pyqtgraph
-brainflow
+pyqtgraph==0.12.2
+mindrove
