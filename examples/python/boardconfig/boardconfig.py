@@ -2,20 +2,11 @@ import time
 import mindrove
 from mindrove.board_shim import BoardShim, MindRoveInputParams, BoardIds, MindRoveError
 
+board_shim = None
 try:
     BoardShim.enable_dev_board_logger()
 
     params = MindRoveInputParams()
-    params.ip_port = 0
-    params.serial_port = ''
-    params.mac_address = ''
-    params.other_info = ''
-    params.serial_number = ''
-    params.ip_address = ''
-    params.ip_protocol = 0
-    params.timeout = 0
-    params.file = ''
-
     board_id = BoardIds.MINDROVE_WIFI_BOARD.value
     board_shim = BoardShim(board_id, params)
     board_shim.prepare_session()
@@ -29,9 +20,9 @@ try:
 except MindRoveError:
     print(MindRoveError)
 
-if board_shim != None:
+if board_shim is not None:
     # Enable EEG mode and read 5 seconds of EEG data
-    board_shim.config_board(mindrove.MindroveConfigMode.EEG_MODE)
+    board_shim.config_board(mindrove.MindroveConfigMode.EEG_MODE) 
     print("Device configured in EEG mode")
     print("Read 5 seconds of EEG data")
 
@@ -72,7 +63,7 @@ if board_shim != None:
 
     # Enable EEG mode again and read 5 seconds of test signal
     board_shim.config_board(mindrove.MindroveConfigMode.EEG_MODE)
-    board_shim.config_board(mindrove.MindroveConfigMode.TEST_SIGNAL)
+    board_shim.config_board(mindrove.MindroveConfigMode.TEST_MODE)
     print("Device configured in EEG mode")
     print("Read 5 seconds of test signal")
 
