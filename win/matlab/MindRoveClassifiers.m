@@ -1,10 +1,8 @@
 classdef MindRoveClassifiers < int32
     % Store supported classifiers
     enumeration
-        REGRESSION(0)
-        KNN(1)
-        SVM(2)
-        LDA(3)
-        DYN_LIB_CLASSIFIER(4)
+        DEFAULT_CLASSIFIER(0)
+        DYN_LIB_CLASSIFIER(1)
+        ONNX_CLASSIFIER(2)
     end
 end

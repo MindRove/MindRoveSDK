@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net7.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)..\..\..\win\x64\*.*&quot; &quot;$(TargetDir)&quot; /s /y /i" />
+  </Target>
+
+  <ItemGroup>
+    <Reference Include="mindrove">
+      <HintPath>$(ProjectDir)..\..\..\win\cs-bin\mindrove.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>

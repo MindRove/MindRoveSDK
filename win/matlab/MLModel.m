@@ -2,6 +2,7 @@ classdef MLModel
     % MLModel for inference
     properties
         input_json
+        input_params
     end
 
     methods(Static)
@@ -28,7 +29,7 @@ classdef MLModel
         end
         
         function check_ec(ec, task_name)
-            if(ec ~= int32(ExitCodes.STATUS_OK))
+            if(ec ~= int32(MindRoveExitCodes.STATUS_OK))
                 error('Non zero ec: %d, for task: %s', ec, task_name)
             end
         end
@@ -38,7 +39,15 @@ classdef MLModel
             task_name = 'release_all';
             lib_name = MLModel.load_lib();
             exit_code = calllib(lib_name, task_name);
-            BoardShim.check_ec(exit_code, task_name);
+            MLModel.check_ec(exit_code, task_name);
+        end
+
+        function log_message(log_level, message)
+            % write message to ML logger
+            task_name = 'log_message_ml_module';
+            lib_name = MLModel.load_lib();
+            exit_code = calllib(lib_name, task_name, log_level, message);
+            MLModel.check_ec(exit_code, task_name);
         end
         
         function set_log_level(log_level)
@@ -88,6 +97,7 @@ classdef MLModel
 
         function obj = MLModel(params)
             obj.input_json = params.to_json();
+            obj.input_params = params;
         end
 
         function prepare(obj)
@@ -110,11 +120,12 @@ classdef MLModel
             % perform inference for input data
             task_name = 'predict';
             lib_name = MLModel.load_lib();
-            score_temp = libpointer('doublePtr', 0.0);
+            score_temp = libpointer('doublePtr', obj.input_params.max_array_size);
+            len = libpointer('int32Ptr', 0);
             input_data_temp = libpointer('doublePtr', input_data);
-            exit_code = calllib(lib_name, task_name, input_data_temp, size(input_data, 2), score_temp, obj.input_json);
+            exit_code = calllib(lib_name, task_name, input_data_temp, size(input_data, 2), score_temp, len, obj.input_json);
             MLModel.check_ec(exit_code, task_name);
-            score = score_temp.Value;
+            score = score_temp.Value(1,1:len.Value);
         end
         
     end
