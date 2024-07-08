@@ -1,5 +1,6 @@
-
-# [MindRove](https://mindrove.com) SDK
+[![MindroveLogo](https://mindrove.com/wp-content/uploads/2023/04/MindRove_logo_2023.svg)](https://mindrove.com)
+# <p align="center">Official SDK</p>
+## ***BETA*** : SyncBox compatible SDK branch : [Release 4.0.0](https://github.com/MindRove/MindRoveSDK/tree/Release4.0).
 
 ## Supported platforms
 
