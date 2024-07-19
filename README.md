@@ -1,6 +1,6 @@
 [![MindroveLogo](https://mindrove.com/wp-content/uploads/2023/04/MindRove_logo_2023.svg)](https://mindrove.com)
 # <p align="center">Official SDK</p>
-## SyncBox compatible SDK release (***beta***) : [Release 4.0.0](https://github.com/MindRove/MindRoveSDK/releases/tag/4.0.0).
+## SyncBox compatible SDK release (***beta***) : [Release 5.0.0](https://github.com/MindRove/MindRoveSDK/releases/tag/5.0.0).
 ## Single-device compatible SDK release (***recommended***) : [Release 3.0.0](https://github.com/MindRove/MindRoveSDK/releases/tag/3.0.0).
 
 ## Supported platforms
