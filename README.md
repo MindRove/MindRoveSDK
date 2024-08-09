@@ -16,10 +16,17 @@ Please visit [docs.mindrove.com](https://docs.mindrove.com).
 
 ## Installation 
 ### Python 
+**For single-devices**:
+
+    pip install mindrove==0.0.10
+
+This will install the recommended package version of `mindrove` for single-devices ( examples are provided under the /examples/python folder )
+
+**SYNCBOX compatible**:
 
     pip install mindrove
-
-This will install the `mindrove` package and you can access it ( examples are provided under the /examples/python folder )
+    
+This will install the beta package version of `mindrove` for both single-devices and SYNCBOX ( examples are provided under the /examples/python folder )
 
 ### C# 
 To start using the MindRove specific C# library, 
