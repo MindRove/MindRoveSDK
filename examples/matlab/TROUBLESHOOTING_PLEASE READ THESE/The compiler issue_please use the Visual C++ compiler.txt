@@ -1,0 +1,10 @@
+Please use the Visual C++ compiler, otherwise (e.g. with the MinGW), the following error will porbably occur:
+
+Error in BoardShim.load_lib (line 14)
+                    loadlibrary('BoardController.dll', 'board_controller.h', 'addheader', 'board_info_getter');
+
+Error in BoardShim.set_log_file (line 57)
+            lib_name = BoardShim.load_lib();
+
+Error in SimpleVisualizer (line 5)
+BoardShim.set_log_file('mindrove.log');
