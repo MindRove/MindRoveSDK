@@ -1,7 +1,7 @@
 [![MindroveLogo](https://mindrove.com/wp-content/uploads/2023/04/MindRove_logo_2023.svg)](https://mindrove.com)
 # <p align="center">Official SDK</p>
 ## SyncBox compatible SDK release (***beta***) : [Release 5.0.0](https://github.com/MindRove/MindRoveSDK/releases/tag/5.0.0).
-## Single-device compatible SDK release (***recommended***) : [Release 3.0.0](https://github.com/MindRove/MindRoveSDK/releases/tag/3.0.0).
+## Single-device compatible SDK release (***recommended***) : [Release 3.0.1](https://github.com/MindRove/MindRoveSDK/releases/tag/3.0.1).
 
 ## Supported platforms
 
@@ -16,10 +16,17 @@ Please visit [docs.mindrove.com](https://docs.mindrove.com).
 
 ## Installation 
 ### Python 
+**For single-devices**:
 
-    pip install mindrove
+    pip install -U mindrove
 
-This will install the `mindrove` package and you can access it ( examples are provided under the /examples/python folder )
+This will install the recommended package version of `mindrove` for single-devices ( examples are provided under the /examples/python folder )
+
+**SYNCBOX compatible**:
+
+    pip install -U --pre mindrove
+    
+This will install the beta package version of `mindrove` for both single-devices and SYNCBOX ( examples are provided under the /examples/python folder )
 
 ### C# 
 To start using the MindRove specific C# library, 
