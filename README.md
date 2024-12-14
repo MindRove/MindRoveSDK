@@ -11,10 +11,20 @@ MacOS
 
 Linux
 
-## Documentation
+## SDK Documentation
 Please visit [docs.mindrove.com](https://docs.mindrove.com). 
 
-## Installation 
+## Device and connection setup
+
+There is an on/off switch on each device.
+
+After turning on the device, it creates a WiFi network.
+
+You need to connect your computer or mobile device to the WiFi network. Password: #mindrove.
+
+For more info about how to handle the devices, please download the Visualizer on Desktop user manual from [https://mindrove.com/downloads/](https://mindrove.com/downloads/)
+
+## SDK Installation 
 ### Python 
 **For single-devices**:
 
