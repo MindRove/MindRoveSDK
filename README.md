@@ -1,8 +1,6 @@
 [![MindroveLogo](https://mindrove.com/wp-content/uploads/2023/04/MindRove_logo_2023.svg)](https://mindrove.com)
 # <p align="center">Official SDK</p>
-## SyncBox compatible SDK release (***beta***) : [Release 4.0.0](https://github.com/MindRove/MindRoveSDK/releases/tag/4.0.0).
-## Single-device compatible SDK release (***recommended***) : [Release 3.0.0](https://github.com/MindRove/MindRoveSDK/releases/tag/3.0.0).
-
+## Download the binaries of the latest version: [![Latest Release](https://img.shields.io/github/v/release/MindRove/MindRoveSDK?label=Version&style=flat-square)](https://github.com/MindRove/MindRoveSDK/releases/latest).
 ## Supported platforms
 
 Windows

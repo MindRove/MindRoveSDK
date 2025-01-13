@@ -70,7 +70,7 @@ def main():
 
 
     params = MindRoveInputParams()
-
+    board_shim = None
     try:
         board_shim = BoardShim(BoardIds.MINDROVE_WIFI_BOARD, params)
         board_shim.prepare_session()
@@ -80,7 +80,7 @@ def main():
         logging.warning('Exception', exc_info=True)
     finally:
         logging.info('End')
-        if board_shim.is_prepared():
+        if board_shim is not None and board_shim.is_prepared():
             logging.info('Releasing session')
             board_shim.release_session()
 
