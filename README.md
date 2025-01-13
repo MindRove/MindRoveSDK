@@ -1,6 +1,6 @@
 [![MindroveLogo](https://mindrove.com/wp-content/uploads/2023/04/MindRove_logo_2023.svg)](https://mindrove.com)
 # <p align="center">Official SDK</p>
-## Download the binaries of the latest version: [![Latest Release](https://img.shields.io/github/v/release/MindRove/MindRoveSDK?label=Version&style=flat-square)](https://github.com/MindRove/MindRoveSDK/releases/latest).
+## Download the binaries of the latest version: [![Latest Release](https://img.shields.io/github/v/release/MindRove/MindRoveSDK?label=Version&style=flat-square)](https://github.com/MindRove/MindRoveSDK/releases/latest)
 ## Supported platforms
 
 Windows
@@ -20,13 +20,15 @@ Please visit [docs.mindrove.com](https://docs.mindrove.com).
 This will install the `mindrove` package and you can access it ( examples are provided under the /examples/python folder )
 
 ### C# 
-To start using the MindRove specific C# library, 
-- Step 1. - in your C# project in Visual Studio Solution Explorer `right click on References -> Add Reference -> Browse (left panel ) -> Click Browse ( near Ok button ) -> select win64/cs-bin/mindrove.dll`
-- Step 2. -  copy the dlls from win64/lib to the folder where your .exe was generated. 
+To integrate the **Mindrove** NuGet package into your C# project, follow these steps:
 
-For a more comfortable usage, recommended to use **post-build event**s ( change %MINDROVESDK_LIB% with your path to the MindRoveSDK repository/win64/lib ) : 
-
-    for /r "%MINDROVESDK_LIB%" %%f in (*.dll) do @xcopy "%%f" "$(TargetDir)" /Y
+1. Open your project in **Visual Studio**.
+2. Navigate to the **Tools** menu and select **NuGet Package Manager** > **Manage NuGet Packages for Solution...**.
+3. In the **Browse** tab:
+   - Search for **Mindrove** in the search box.
+   - Select the appropriate package from the results.
+4. Choose your project from the list of projects displayed.
+5. Click the **Install** button and confirm any prompts to complete the installation.
 
 ### C++ 
 Check out the MindRove specific C++ library.
