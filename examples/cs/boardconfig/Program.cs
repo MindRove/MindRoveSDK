@@ -7,7 +7,7 @@ namespace boardconfig
     internal class Program
     {
         static BoardShim board_shim = null;
-        static int sampling_rate = 250;
+        static int sampling_rate = 500;
         static int counter_idx = 0;
         static int trigger_idx = 0;
         static int n_package = 0;
