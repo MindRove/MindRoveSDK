@@ -54,9 +54,9 @@ class Graph:
                                         FilterTypes.BUTTERWORTH.value, 0)
             DataFilter.perform_bandpass(data[channel], self.sampling_rate, 51.0, 100.0, 2,
                                         FilterTypes.BUTTERWORTH.value, 0)
-            DataFilter.perform_bandstop(data[channel], self.sampling_rate, 50.0, 4.0, 2,
+            DataFilter.perform_bandstop(data[channel], self.sampling_rate, 4.0, 50.0, 2,
                                         FilterTypes.BUTTERWORTH.value, 0)
-            DataFilter.perform_bandstop(data[channel], self.sampling_rate, 60.0, 4.0, 2,
+            DataFilter.perform_bandstop(data[channel], self.sampling_rate, 4.0, 60.0, 2,
                                         FilterTypes.BUTTERWORTH.value, 0)
             self.curves[count].setData(data[channel].tolist())
 

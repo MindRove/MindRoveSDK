@@ -5,7 +5,7 @@ import pyqtgraph as pg
 from pyqtgraph.Qt import QtGui, QtCore
 
 from mindrove.board_shim import BoardShim, MindRoveInputParams, BoardIds
-from mindrove.data_filter import DataFilter, FilterTypes, WindowFunctions, DetrendOperations
+from mindrove.data_filter import DataFilter, FilterTypes, WindowOperations, DetrendOperations
 
 
 class Graph:
@@ -93,15 +93,15 @@ class Graph:
             DataFilter.detrend(data[channel], DetrendOperations.CONSTANT.value)
             DataFilter.perform_bandpass(data[channel], self.sampling_rate, 30.0, 56.0, 2,
                                         FilterTypes.BUTTERWORTH.value, 0)
-            DataFilter.perform_bandstop(data[channel], self.sampling_rate, 50.0, 4.0, 2,
+            DataFilter.perform_bandstop(data[channel], self.sampling_rate, 4.0, 50.0, 2,
                                         FilterTypes.BUTTERWORTH.value, 0)
-            DataFilter.perform_bandstop(data[channel], self.sampling_rate, 60.0, 4.0, 2,
+            DataFilter.perform_bandstop(data[channel], self.sampling_rate, 4.0, 60.0, 2,
                                         FilterTypes.BUTTERWORTH.value, 0)
             self.curves[count].setData(data[channel].tolist())
             if data.shape[1] > self.psd_size:
                 # plot psd
                 psd_data = DataFilter.get_psd_welch(data[channel], self.psd_size, self.psd_size // 2, self.sampling_rate,
-                                   WindowFunctions.BLACKMAN_HARRIS.value)
+                                   WindowOperations.BLACKMAN_HARRIS.value)
                 lim = min(70, len(psd_data[0]))
                 self.psd_curves[count].setData(psd_data[1][0:lim].tolist(), psd_data[0][0:lim].tolist())
                 # plot bands
