@@ -32,7 +32,7 @@ namespace boardconfig
                 trigger_idx = BoardShim.get_other_channels(board_id)[0];
                 Console.WriteLine("Device ready");
             }
-            catch (MindRoveException ex)
+            catch (MindRoveError ex)
             {
                 Console.WriteLine(ex);
             }
@@ -152,7 +152,7 @@ namespace boardconfig
                 {
                     board_shim.release_session();
                 }
-                catch (MindRoveException e)
+                catch (MindRoveError e)
                 {
                     Console.WriteLine(e);
                 }
