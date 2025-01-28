@@ -42,6 +42,9 @@ For using the SDK we provided the binaries for x64 win systems in win64/ and for
 
 To get started, we provided a C# code as a standalone example and the same code integrated into Unity. You can find these examples under the examples/ folder. 
 
+## There's more! Open-source hand gesture recognition software.
+If you are interested in using or developing hand gesture recognition software, you might want to check out our public and open-source [NaviFlame](https://github.com/MindRove/NaviFlame) GitHub repo.
+
 ## Contribute
 For any bugs or if the rest of the platform binaries are needed, please make an issue.
 
