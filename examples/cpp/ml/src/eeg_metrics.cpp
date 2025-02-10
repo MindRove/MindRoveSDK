@@ -9,6 +9,8 @@
 #endif
 
 #include "board_shim.h"
+#include "data_filter.h"
+#include "ml_model.h"
 
 using namespace std;
 
@@ -19,19 +21,16 @@ int main (int argc, char *argv[])
 {
     BoardShim::enable_dev_board_logger ();
 
-    BoardShim::get_board_presets (-1);
     struct MindRoveInputParams params;
-    int board_id = -1;
-    
+    int board_id = 0;
     if (!parse_args (argc, argv, &params, &board_id))
     {
         return -1;
     }
-    
     int res = 0;
-    
+
     BoardShim *board = new BoardShim (board_id, params);
-    
+
     try
     {
         board->prepare_session ();
@@ -44,9 +43,31 @@ int main (int argc, char *argv[])
 #endif
 
         board->stop_stream ();
-        MindRoveArray<double, 2> data = board->get_current_board_data (10);
+        MindRoveArray<double, 2> data = board->get_board_data ();
         board->release_session ();
         std::cout << data << std::endl;
+        // calc band powers
+        int sampling_rate = BoardShim::get_sampling_rate ((int)BoardIds::SYNTHETIC_BOARD);
+        std::vector<int> eeg_channels = BoardShim::get_eeg_channels (board_id);
+        std::pair<double *, double *> bands =
+            DataFilter::get_avg_band_powers (data, eeg_channels, sampling_rate, true);
+
+        struct MindRoveModelParams mindfulness_params (
+            (int)MindRoveMetrics::MINDFULNESS, (int)MindRoveClassifiers::DEFAULT_CLASSIFIER);
+        MLModel mindfulness_model (mindfulness_params);
+        mindfulness_model.prepare ();
+        std::cout << "Mindfulness :" << mindfulness_model.predict (bands.first, 5)[0] << std::endl;
+        mindfulness_model.release ();
+
+        struct MindRoveModelParams restfulness_params (
+            (int)MindRoveMetrics::RESTFULNESS, (int)MindRoveClassifiers::DEFAULT_CLASSIFIER);
+        MLModel restfulness_model (restfulness_params);
+        restfulness_model.prepare ();
+        std::cout << "Restfulness :" << restfulness_model.predict (bands.first, 5)[0] << std::endl;
+        restfulness_model.release ();
+
+        delete[] bands.first;
+        delete[] bands.second;
     }
     catch (const MindRoveException &err)
     {
@@ -95,64 +116,12 @@ bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int
                 return false;
             }
         }
-        if (std::string (argv[i]) == std::string ("--ip-address-aux"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_address_aux = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--ip-address-anc"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_address_anc = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
         if (std::string (argv[i]) == std::string ("--ip-port"))
         {
             if (i + 1 < argc)
             {
                 i++;
                 params->ip_port = std::stoi (std::string (argv[i]));
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--ip-port-aux"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_port_aux = std::stoi (std::string (argv[i]));
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--ip-port-anc"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_port_anc = std::stoi (std::string (argv[i]));
             }
             else
             {
@@ -244,45 +213,6 @@ bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int
             {
                 i++;
                 params->file = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--file-aux"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->file_aux = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--file-anc"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->file_anc = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--master-board"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->master_board = std::stoi (std::string (argv[i]));
             }
             else
             {

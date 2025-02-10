@@ -9,32 +9,37 @@
 #endif
 
 #include "board_shim.h"
+#include "data_filter.h"
+#include "ml_model.h"
 
 using namespace std;
 
-bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int *board_id);
+bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int *board_id,
+    struct MindRoveModelParams *model_params);
 
 
 int main (int argc, char *argv[])
 {
     BoardShim::enable_dev_board_logger ();
+    MLModel::enable_dev_ml_logger ();
 
-    BoardShim::get_board_presets (-1);
     struct MindRoveInputParams params;
-    int board_id = -1;
-    
-    if (!parse_args (argc, argv, &params, &board_id))
+    struct MindRoveModelParams model_params (
+        (int)MindRoveMetrics::RESTFULNESS, (int)MindRoveClassifiers::DEFAULT_CLASSIFIER);
+    int board_id = 0;
+    if (!parse_args (argc, argv, &params, &board_id, &model_params))
     {
         return -1;
     }
-    
     int res = 0;
-    
+
     BoardShim *board = new BoardShim (board_id, params);
-    
+    int master_board_id = 0;
+
     try
     {
         board->prepare_session ();
+        master_board_id = board->get_board_id ();
         board->start_stream ();
 
 #ifdef _WIN32
@@ -44,9 +49,26 @@ int main (int argc, char *argv[])
 #endif
 
         board->stop_stream ();
-        MindRoveArray<double, 2> data = board->get_current_board_data (10);
+        MindRoveArray<double, 2> data = board->get_board_data ();
         board->release_session ();
         std::cout << data << std::endl;
+        // calc band powers
+        int sampling_rate = BoardShim::get_sampling_rate (master_board_id);
+        std::vector<int> eeg_channels = BoardShim::get_eeg_channels (master_board_id);
+        std::pair<double *, double *> bands =
+            DataFilter::get_avg_band_powers (data, eeg_channels, sampling_rate, true);
+
+        MLModel model (model_params);
+        model.prepare ();
+        std::cout << "Score :";
+        for (double score : model.predict (bands.first, 5))
+        {
+            std::cout << score << std::endl;
+        }
+        model.release ();
+
+        delete[] bands.first;
+        delete[] bands.second;
     }
     catch (const MindRoveException &err)
     {
@@ -63,9 +85,12 @@ int main (int argc, char *argv[])
     return res;
 }
 
-bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int *board_id)
+bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int *board_id,
+    struct MindRoveModelParams *model_params)
 {
     bool board_id_found = false;
+    bool classifier_found = false;
+    bool metric_found = false;
     for (int i = 1; i < argc; i++)
     {
         if (std::string (argv[i]) == std::string ("--board-id"))
@@ -75,6 +100,74 @@ bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int
                 i++;
                 board_id_found = true;
                 *board_id = std::stoi (std::string (argv[i]));
+            }
+            else
+            {
+                std::cerr << "missed argument" << std::endl;
+                return false;
+            }
+        }
+        if (std::string (argv[i]) == std::string ("--classifier"))
+        {
+            if (i + 1 < argc)
+            {
+                i++;
+                classifier_found = true;
+                model_params->classifier = std::stoi (std::string (argv[i]));
+            }
+            else
+            {
+                std::cerr << "missed argument" << std::endl;
+                return false;
+            }
+        }
+        if (std::string (argv[i]) == std::string ("--metric"))
+        {
+            if (i + 1 < argc)
+            {
+                i++;
+                metric_found = true;
+                model_params->metric = std::stoi (std::string (argv[i]));
+            }
+            else
+            {
+                std::cerr << "missed argument" << std::endl;
+                return false;
+            }
+        }
+        if (std::string (argv[i]) == std::string ("--model-file"))
+        {
+            if (i + 1 < argc)
+            {
+                i++;
+                model_params->file = std::string (argv[i]);
+            }
+            else
+            {
+                std::cerr << "missed argument" << std::endl;
+                return false;
+            }
+        }
+        if (std::string (argv[i]) == std::string ("--output-name"))
+        {
+            if (i + 1 < argc)
+            {
+                i++;
+                model_params->output_name = std::string (argv[i]);
+            }
+            else
+            {
+                std::cerr << "missed argument" << std::endl;
+                return false;
+            }
+        }
+        if (std::string (argv[i]) == std::string ("--metric"))
+        {
+            if (i + 1 < argc)
+            {
+                i++;
+                metric_found = true;
+                model_params->metric = std::stoi (std::string (argv[i]));
             }
             else
             {
@@ -95,64 +188,12 @@ bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int
                 return false;
             }
         }
-        if (std::string (argv[i]) == std::string ("--ip-address-aux"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_address_aux = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--ip-address-anc"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_address_anc = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
         if (std::string (argv[i]) == std::string ("--ip-port"))
         {
             if (i + 1 < argc)
             {
                 i++;
                 params->ip_port = std::stoi (std::string (argv[i]));
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--ip-port-aux"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_port_aux = std::stoi (std::string (argv[i]));
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--ip-port-anc"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_port_anc = std::stoi (std::string (argv[i]));
             }
             else
             {
@@ -251,49 +292,20 @@ bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int
                 return false;
             }
         }
-        if (std::string (argv[i]) == std::string ("--file-aux"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->file_aux = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--file-anc"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->file_anc = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--master-board"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->master_board = std::stoi (std::string (argv[i]));
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
     }
     if (!board_id_found)
     {
         std::cerr << "board id is not provided" << std::endl;
+        return false;
+    }
+    if (!classifier_found)
+    {
+        std::cerr << "classifier is not provided" << std::endl;
+        return false;
+    }
+    if (!metric_found)
+    {
+        std::cerr << "metric is not provided" << std::endl;
         return false;
     }
     return true;

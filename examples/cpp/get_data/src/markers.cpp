@@ -19,32 +19,33 @@ int main (int argc, char *argv[])
 {
     BoardShim::enable_dev_board_logger ();
 
-    BoardShim::get_board_presets (-1);
     struct MindRoveInputParams params;
-    int board_id = -1;
-    
+    int board_id = 0;
     if (!parse_args (argc, argv, &params, &board_id))
     {
         return -1;
     }
-    
     int res = 0;
-    
+
     BoardShim *board = new BoardShim (board_id, params);
-    
+
     try
     {
         board->prepare_session ();
         board->start_stream ();
 
+        for (int i = 1; i < 5; i++)
+        {
+            board->insert_marker (i);
 #ifdef _WIN32
-        Sleep (5000);
+            Sleep (2000);
 #else
-        sleep (5);
+            sleep (2);
 #endif
+        }
 
         board->stop_stream ();
-        MindRoveArray<double, 2> data = board->get_current_board_data (10);
+        MindRoveArray<double, 2> data = board->get_board_data ();
         board->release_session ();
         std::cout << data << std::endl;
     }
@@ -95,64 +96,12 @@ bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int
                 return false;
             }
         }
-        if (std::string (argv[i]) == std::string ("--ip-address-aux"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_address_aux = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--ip-address-anc"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_address_anc = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
         if (std::string (argv[i]) == std::string ("--ip-port"))
         {
             if (i + 1 < argc)
             {
                 i++;
                 params->ip_port = std::stoi (std::string (argv[i]));
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--ip-port-aux"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_port_aux = std::stoi (std::string (argv[i]));
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--ip-port-anc"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->ip_port_anc = std::stoi (std::string (argv[i]));
             }
             else
             {
@@ -244,32 +193,6 @@ bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int
             {
                 i++;
                 params->file = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--file-aux"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->file_aux = std::string (argv[i]);
-            }
-            else
-            {
-                std::cerr << "missed argument" << std::endl;
-                return false;
-            }
-        }
-        if (std::string (argv[i]) == std::string ("--file-anc"))
-        {
-            if (i + 1 < argc)
-            {
-                i++;
-                params->file_anc = std::string (argv[i]);
             }
             else
             {
