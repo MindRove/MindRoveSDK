@@ -52,7 +52,6 @@ jobs:
             "get_data_twice"
             "multiple_streamers"
             "eeg_metrics"
-            "eeg_metrics_ci"
             "band_power_all"
             "band_power"
             "csp"
