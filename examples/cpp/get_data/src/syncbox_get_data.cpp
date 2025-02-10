@@ -13,7 +13,7 @@
 
 using namespace std;
 
-bool parse_args (int argc, char *argv[], struct MindRoveInputParams *params, int *board_id);
+bool parse_args (int argc, char *argv[], std::vector<MindRoveInputParams> *params);
 
 
 int main (int argc, char *argv[])
@@ -167,7 +167,7 @@ bool parse_args (int argc, char *argv[], std::vector<MindRoveInputParams> *param
         }
 
     }
-    if (mac_idx == 0 || port_idx == 0)
+    if (mac_idx == 0 && port_idx == 0)
     {
         std::cerr << "Provide a way to select devices connected to the Syncbox" << std::endl;
         std::cerr << "For example if you want to connect to 3 devices (ex. MindRove_ARB_abc123, MindRove_ARC_def456 and MindRove_ARB_ghi789) use the following command: " << std::endl;
