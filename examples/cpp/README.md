@@ -48,6 +48,7 @@ To build the examples, follow these steps:
     ```bash
     bin\get_data\get_data.exe --board-id -1
 
+    ```
     This command runs the get_data executable with the --board-id -1 parameter, which is used to initiate a synthetic board that simulates incoming data.
 
 ## Additional Information
