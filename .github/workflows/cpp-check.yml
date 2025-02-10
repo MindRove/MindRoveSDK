@@ -35,6 +35,7 @@ jobs:
       - name: Configure, Build, and Install
         run: |
           # Create a build directory and configure the project with the SDK release directory.
+          cd ${{ github.workspace }}/examples/cpp
           mkdir build && cd build
           cmake .. -DSDK_RELEASE_DIR="../mindrovesdk-release"
           cmake --build . --config Release
