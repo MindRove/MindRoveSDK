@@ -29,7 +29,7 @@ jobs:
           echo "Downloading SDK from: $DOWNLOAD_URL"
           curl -L "$DOWNLOAD_URL" -o sdk_release.zip
           # Unzip the release into a directory named 'mindrovesdk-release'
-          unzip sdk_release.zip -d mindrovesdk-release
+          unzip -q sdk_release.zip -d mindrovesdk-release || true
           ls -la mindrovesdk-release
 
       - name: Configure, Build, and Install
