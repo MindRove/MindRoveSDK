@@ -10,6 +10,8 @@ obj/*
 __pycache__/*
 examples/*/[Bb]in
 examples/*/mindrovesdk*
+*.zip
+
 # Unity gitignore
 
 [Ll]ibrary/

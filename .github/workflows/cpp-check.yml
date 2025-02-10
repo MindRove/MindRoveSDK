@@ -1,0 +1,76 @@
+name: C++ Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [published]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++ jq unzip
+
+      - name: Download and Unzip MindRove SDK Release
+        run: |
+          cd ${{ github.workspace }}/examples/cpp
+          # Get the download URL for the asset ending with "-linux-x64.zip"
+          DOWNLOAD_URL=$(curl --silent "https://api.github.com/repos/MindRove/MindRoveSDK/releases/latest" | \
+            jq -r '.assets[] | select(.name | endswith("-linux-x64.zip")) | .browser_download_url')
+          echo "Downloading SDK from: $DOWNLOAD_URL"
+          curl -L "$DOWNLOAD_URL" -o sdk_release.zip
+          # Unzip the release into a directory named 'mindrovesdk-release'
+          unzip sdk_release.zip -d mindrovesdk-release
+          ls -la mindrovesdk-release
+
+      - name: Configure, Build, and Install
+        run: |
+          # Create a build directory and configure the project with the SDK release directory.
+          mkdir build && cd build
+          cmake .. -DSDK_RELEASE_DIR="../mindrovesdk-release"
+          cmake --build . --config Release
+          cmake --install .
+          cd ..
+
+      - name: Run Executable Tests
+        run: |
+          # List of executables to test (excluding syncbox_get_data)
+          executables=(
+            "get_data"
+            "markers"
+            "get_data_twice"
+            "multiple_streamers"
+            "eeg_metrics"
+            "eeg_metrics_ci"
+            "band_power_all"
+            "band_power"
+            "csp"
+            "denoising"
+            "downsampling"
+            "ica"
+            "peaks_detection"
+            "serialization"
+            "signal_filtering"
+            "transforms"
+            "windowing"
+          )
+          for exe in "${executables[@]}"; do
+            echo "Running ${exe} with '--board-id -1'"
+            # Assuming the executable is installed to: bin/<executable>/<executable>
+            binary="./bin/${exe}/${exe}"
+            if [ ! -f "$binary" ]; then
+              echo "Error: Binary ${binary} not found!"
+              exit 1
+            fi
+            chmod +x "$binary"
+            "$binary" --board-id -1
+          done
