@@ -44,6 +44,7 @@ jobs:
 
       - name: Run Executable Tests
         run: |
+          cd ${{ github.workspace }}/examples/cpp
           # List of executables to test (excluding syncbox_get_data)
           executables=(
             "get_data"
