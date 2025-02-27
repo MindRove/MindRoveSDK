@@ -1,5 +1,8 @@
 [![MindroveLogo](https://mindrove.com/wp-content/uploads/2023/04/MindRove_logo_2023.svg)](https://mindrove.com)
 # <p align="center">Official SDK</p>
+
+# <p align="center"><a href="https://pypi.org/project/mindrove/"><img alt="PYPI" src="https://static.pepy.tech/personalized-badge/mindrove?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads PYPI"></a> <a href="https://www.nuget.org/packages/mindrove/"><img alt="Nuget" src="https://img.shields.io/nuget/dt/mindrove?color=blue&label=Downloads Nuget&logo=MindRove"></a></p>
+
 ## Download the binaries of the latest version: [![Latest Release](https://img.shields.io/github/v/release/MindRove/MindRoveSDK?label=Version&style=flat-square)](https://github.com/MindRove/MindRoveSDK/releases/latest)
 ## Supported platforms
 
