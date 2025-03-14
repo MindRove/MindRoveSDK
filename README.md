@@ -11,6 +11,9 @@
 
 ## <p align="center"> [![Docs](https://img.shields.io/badge/Visit-Documentation-purple?style=for-the-badge)](https://docs.mindrove.com/) <br><br>[![Get Started!](https://img.shields.io/badge/Getting-Started-brown?style=for-the-badge)](https://docs.mindrove.com/main/GettingStarted.html) </p>
 
+
+## <p align="center"> :fire: Try out our new gesture recognition software :fire: <br><br>[![Naviflame](https://img.shields.io/badge/NaviFlame-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MindRove/NaviFlame)</p>
+
 ## Installation 
 ### Python 
 
