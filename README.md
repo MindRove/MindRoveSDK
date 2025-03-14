@@ -3,9 +3,9 @@
 
 # <p align="center"><a href="https://pypi.org/project/mindrove/"><img alt="PYPI" src="https://static.pepy.tech/personalized-badge/mindrove?period=total&units=international_system&left_color=grey&right_color=blue&left_text=Downloads PYPI"></a> <a href="https://www.nuget.org/packages/mindrove/"><img alt="Nuget" src="https://img.shields.io/nuget/dt/mindrove?color=blue&label=Downloads Nuget&logo=MindRove"></a></p>
 
-# <p align="center">![Cpp-Examples](https://img.shields.io/github/actions/workflow/status/MindRove/MindRoveSDK/cpp-check.yml?label=CPP%20Examples) </p>
+# <p align="center">![Cpp-Examples](https://img.shields.io/github/actions/workflow/status/MindRove/MindRoveSDK/cpp-check.yml?label=CPP%20Examples) [![License](https://img.shields.io/badge/License-Apache_2.0-yellow.svg)](https://opensource.org/licenses/Apache-2.0) [![Docs](https://img.shields.io/badge/Visit-Documentation-purple?style=flat-default)](https://docs.mindrove.com/) </p>
 
-## Download the binaries of the latest version: [![Latest Release](https://img.shields.io/github/v/release/MindRove/MindRoveSDK?label=Version&style=flat-square)](https://github.com/MindRove/MindRoveSDK/releases/latest)
+## Download the binaries of the latest version: [![Latest Release](https://img.shields.io/github/v/release/MindRove/MindRoveSDK?label=Version&style=flat-default)](https://github.com/MindRove/MindRoveSDK/releases/latest)
 ## Supported platforms
 
 Windows
