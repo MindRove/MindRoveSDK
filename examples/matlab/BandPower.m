@@ -11,7 +11,7 @@ BoardShim.enable_dev_board_logger();
 
 params = MindRoveInputParams();
 board_shim = BoardShim(int32(BoardIds.MINDROVE_WIFI_BOARD), params);
-board_id = int32(BoardIds.SYNTHETIC_BOARD);
+board_id = int32(BoardIds.MINDROVE_WIFI_BOARD);
 preset = int32(MindRovePresets.DEFAULT_PRESET);
 board_descr = BoardShim.get_board_descr(board_id, preset);
 sampling_rate = int32(board_descr.sampling_rate);
