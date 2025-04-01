@@ -7,8 +7,6 @@
 
 ## <p align="center"> [![Latest Release](https://img.shields.io/github/v/release/MindRove/MindRoveSDK?label=Download%20Latest%20Version&style=for-the-badge)](https://github.com/MindRove/MindRoveSDK/releases/latest) </p>
 
-## <p align="center"> Follow us on:  <br><br> [![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/mindrove) [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/mindrove) [![Youtube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@mindrove)</p>
-
 ## <p align="center"> [![Docs](https://img.shields.io/badge/Visit-Documentation-purple?style=for-the-badge)](https://docs.mindrove.com/) <br><br>[![Get Started!](https://img.shields.io/badge/Getting-Started-brown?style=for-the-badge)](https://docs.mindrove.com/main/GettingStarted.html) </p>
 
 
@@ -46,6 +44,8 @@ To get started, we provided a C# code as a standalone example and the same code 
 
 ## There's more! Open-source hand gesture recognition software.
 If you are interested in using or developing hand gesture recognition software, you might want to check out our public and open-source [NaviFlame](https://github.com/MindRove/NaviFlame) GitHub repo.
+
+## <p align="center"> Follow us on:  <br><br> [![Facebook](https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white)](https://www.facebook.com/mindrove) [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/company/mindrove) [![Youtube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@mindrove)</p>
 
 ## Contribute
 For any bugs or if the rest of the platform binaries are needed, please make an issue.
