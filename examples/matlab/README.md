@@ -5,7 +5,7 @@ To properly use the MindRove SDK with MATLAB, you must configure your environmen
 ## Setup Instructions
 
 1. **Download the MindRove SDK**  
-    Visit the [MindRoveSDK GitHub](https://github.com/MindRove/MindRoveSDK/releases/) and download the [latest release](https://github.com/MindRove/MindRoveSDK/releases/tag/5.1.4) that matches your operating system (e.g. `mindrovesdk-5.1.4-win-x64.zip` for 64-bit Windows).
+    Visit the [MindRoveSDK GitHub](https://github.com/MindRove/MindRoveSDK/releases/) and download the [latest release](https://github.com/MindRove/MindRoveSDK/releases/latest) that matches your operating system (e.g. `mindrovesdk-5.1.4-win-x64.zip` for 64-bit Windows).
 
 2. **Extract Files**  
     Unzip the downloaded archive and extract its contents and copy the folders into the `matlab/mindrove` directory of this project.
@@ -18,8 +18,6 @@ To properly use the MindRove SDK with MATLAB, you must configure your environmen
 
 
 3. **Ensure the Folder Structure Matches**  
-    After extraction, your folder structure should look like this:
-
     After setup, your folder structure should look like this:
 
     ```
