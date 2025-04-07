@@ -19,6 +19,7 @@ public class NewBehaviourScript : MonoBehaviour
     {
         try
         {
+            //BoardShim.set_log_file("mindrove_log.txt");
             BoardShim.enable_dev_board_logger();
 
             MindRoveInputParams input_params = new MindRoveInputParams();
@@ -28,17 +29,17 @@ public class NewBehaviourScript : MonoBehaviour
             board_shim = new BoardShim(board_id, input_params);
             board_shim.prepare_session();
 
-            board_shim.start_stream(); 
-                                       //board_shim.start_stream(450000, "file://file_stream.csv:w");
+            //board_shim.start_stream(); 
+            board_shim.start_stream(450000, "file://file_stream.csv:w");
 
-            MindRoveModelParams concentration_params = new MindRoveModelParams((int)MindRoveMetrics.CONCENTRATION, (int)MindRoveClassifiers.REGRESSION);
+            MindRoveModelParams concentration_params = new MindRoveModelParams((int)MindRoveMetrics.MINDFULNESS, (int)MindRoveClassifiers.DEFAULT_CLASSIFIER);
             concentration = new MLModel(concentration_params);
             concentration.prepare();
             sampling_rate = BoardShim.get_sampling_rate(board_id);
             eeg_channels = BoardShim.get_eeg_channels(board_id);
 
         }
-        catch (MindRoveException ex)
+        catch (Exception ex)
         {
             Debug.Log(ex);
 
@@ -80,7 +81,7 @@ public class NewBehaviourScript : MonoBehaviour
                 board_shim.release_session();
                 concentration.release();
             }
-            catch (MindRoveException e)
+            catch (Exception e)
             {
                 Debug.Log(e);
             }

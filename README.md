@@ -34,7 +34,7 @@ To integrate the **Mindrove** NuGet package into your C# project, follow these s
 Check out the MindRove-specific C++ library from the latest release. Find the link to the latest release above in this readme, at the "Download the binaries of the latest version" section.
 
 ### MATLAB 
-Check out the MindRove-specific MATLAB library.
+Check out the MindRove-specific MATLAB library. Find the link to the latest release above in this readme, at the "Download the binaries of the latest version" section.
 
 
 ## Get started!
